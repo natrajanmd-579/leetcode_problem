@@ -16,11 +16,13 @@ public:
             if (s[i] >= '0' && s[i] <= '9') {
                 start = true;
                 num = num * 10 + (s[i] - '0');
+                if (sign * num >= INT_MAX) return INT_MAX;
+                if (sign * num <= INT_MIN) return INT_MIN;
             }
             else {
                 break; 
             }
         }
-        return num * sign;
+        return int(num * sign);
     }
 };
