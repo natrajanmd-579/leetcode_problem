@@ -1,20 +1,39 @@
 class Solution {
 public:
-    int robhelp(vector<int>& nums,int start,int end) {
-        int prev1=0;
-        int prev2=0;
-        for(int i=start;i<=end;i++){
-            int curr=max(prev1,prev2+nums[i]);
-            prev2=prev1;
-            prev1=curr;
+
+    int robRange(vector<int>& nums, int start, int end) {
+
+        int n = end - start + 1;
+
+        vector<int> dp(n, 0);
+
+        dp[0] = nums[start];
+
+        if (n > 1)
+            dp[1] = max(nums[start], nums[start + 1]);
+
+        for (int i = 2; i < n; i++) {
+
+            dp[i] = max(
+                dp[i - 1],
+                dp[i - 2] + nums[start + i]
+            );
         }
-        return prev1;
+
+        return dp[n - 1];
     }
-    int rob(vector<int>&nums){
-        int n=nums.size();
-        if(n==1) return nums[0];
-        int case1=robhelp(nums,0,n-2);
-        int case2=robhelp(nums,1,n-1);
-        return max(case1,case2);
+
+    int rob(vector<int>& nums) {
+
+        int n = nums.size();
+
+        if (n == 1)
+            return nums[0];
+
+        int case1 = robRange(nums, 0, n - 2);
+
+        int case2 = robRange(nums, 1, n - 1);
+
+        return max(case1, case2);
     }
 };
